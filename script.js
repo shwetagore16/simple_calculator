@@ -15,6 +15,17 @@ function backspace() {
   display.value = display.value.slice(0, -1);
 }
 
+// Handle percent (%) button
+function percent() {
+  if (display.value !== "") {
+    try {
+      display.value = (parseFloat(display.value) / 100).toString();
+    } catch (err) {
+      display.value = "Error";
+    }
+  }
+}
+
 // Calculate and show result
 function calculate() {
   try {
@@ -25,10 +36,25 @@ function calculate() {
   }
 }
 
-// Toggle light/dark theme
+// Toggle light/dark theme using the switch
 function toggleTheme() {
-  document.body.classList.toggle("light-mode");
+  const isLight = document.getElementById('theme-toggle').checked;
+  if (isLight) {
+    document.body.classList.add('light-mode');
+  } else {
+    document.body.classList.remove('light-mode');
+  }
 }
+
+// Ensure toggle reflects current theme on load
+window.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.getElementById('theme-toggle');
+  if (document.body.classList.contains('light-mode')) {
+    toggle.checked = true;
+  } else {
+    toggle.checked = false;
+  }
+});
 
 // Keyboard input support
 document.addEventListener("keydown", (e) => {
